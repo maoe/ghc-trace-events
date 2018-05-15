@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE UnboxedTuples #-}
 {-|
@@ -22,6 +23,7 @@ import GHC.Ptr
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
+import GHC.Prim
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 

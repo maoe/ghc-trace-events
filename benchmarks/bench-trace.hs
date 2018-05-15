@@ -3,6 +3,7 @@ import Criterion.Main
 
 import qualified Debug.Trace as Base
 import qualified Debug.Trace.ByteString as B
+import qualified Debug.Trace.Binary as Bin
 import qualified Debug.Trace.String as S
 import qualified Debug.Trace.Text as T
 
@@ -40,4 +41,6 @@ main = do
       , bench "ByteString/Unsafe" $ nfIO $ B.unsafeTraceMarkerIO "Hello"
       , bench "Text" $ nfIO $ T.traceMarkerIO "Hello"
       ]
+    , bench "traceBinaryEvent" $ whnf (Bin.traceBinaryEvent "Hello") ()
+    , bench "traceBinaryEventIO" $ nfIO $ Bin.traceBinaryEventIO "Hello"
     ]
