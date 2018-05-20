@@ -1,5 +1,5 @@
 # Revision history for ghc-trace-events
 
-## 0.0.0 -- YYYY-mm-dd
+## v0.0.0 - 2018-05-21
 
-* First version. Released on an unsuspecting world.
+* First version
