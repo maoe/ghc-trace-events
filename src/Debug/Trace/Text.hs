@@ -1,5 +1,8 @@
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE UnboxedTuples #-}
+{-|
+'T.Text' variants of the tracing functions in "Debug.Trace".
+-}
 module Debug.Trace.Text
   ( traceEvent
   , traceEventIO
@@ -20,6 +23,13 @@ import qualified Data.Text.Encoding as TE
 
 import Debug.Trace.Internal (userTracingEnabled)
 
+-- | 'T.Text' variant of 'Debug.Trace.traceEvent'.
+--
+-- \(O(n)\) This function marshals the 'T.Text' into a 'B.ByteString' and
+-- convert it into a null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'T.Text' if user tracing
+-- in eventlog is disabled.
 traceEvent :: T.Text -> a -> a
 traceEvent message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -28,12 +38,26 @@ traceEvent message a
   | otherwise = a
 {-# NOINLINE traceEvent #-}
 
+-- | 'T.Text' variant of 'Debug.Trace.traceEventIO'.
+--
+-- \(O(n)\) This function marshals the 'T.Text' into a 'B.ByteString' and
+-- convert it into a null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'T.Text' if user tracing
+-- in eventlog is disabled.
 traceEventIO :: T.Text -> IO ()
 traceEventIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->
     case traceEvent# p s of
       s' -> (# s', () #)
 
+-- | 'T.Text' variant of 'Debug.Trace.traceMarker'.
+--
+-- \(O(n)\) This function marshals the 'T.Text' into a 'B.ByteString' and
+-- convert it into a null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'T.Text' if user tracing
+-- in eventlog is disabled.
 traceMarker :: T.Text -> a -> a
 traceMarker message a
   | userTracingEnabled = unsafeDupablePerformIO $ do
@@ -42,6 +66,13 @@ traceMarker message a
   | otherwise = a
 {-# NOINLINE traceMarker #-}
 
+-- | 'T.Text' variant of 'Debug.Trace.traceMarkerIO'.
+--
+-- \(O(n)\) This function marshals the 'T.Text' into a 'B.ByteString' and
+-- convert it into a null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'T.Text' if user tracing
+-- in eventlog is disabled.
 traceMarkerIO :: T.Text -> IO ()
 traceMarkerIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->

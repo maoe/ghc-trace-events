@@ -1,4 +1,7 @@
 {-# LANGUAGE CPP #-}
+{-|
+Internal module that includes utility functions.
+-}
 module Debug.Trace.Internal
   ( userTracingEnabled
   ) where
@@ -8,6 +11,7 @@ import Foreign.Marshal.Utils
 import Data.Word
 #endif
 
+-- | Check if user tracing is enabled in event logging.
 userTracingEnabled :: Bool
 userTracingEnabled = toBool c_userTracingEnabled
 {-# NOINLINE userTracingEnabled #-}
