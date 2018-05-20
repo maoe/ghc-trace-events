@@ -1,0 +1,11 @@
+*.sublime-*
+*~
+.DS_Store
+.cabal-sandbox
+.ghc.*
+/.stack-work/
+/dist-newstyle/
+/dist/
+cabal.project.local
+cabal.sandbox.config
+*.eventlog
