@@ -1,6 +1,6 @@
 name: ghc-trace-events
 version: 0.0.0
-synopsis: Faster replacements for traceEvent and traceEventMarker
+synopsis: Faster replacements for traceEvent and traceMarker
 description: This library provies 3 modules:
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
