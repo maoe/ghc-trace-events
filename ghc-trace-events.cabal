@@ -9,6 +9,10 @@ description: This library provies 3 modules:
   tracing functions in "Debug.Trace".
   ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
   in "Debug.Trace".
+  .
+  Unlike the tracing functions in base, all the tracing functions in this
+  package don't evaluate the input if user event logging (the @-lu@ option) is
+  disabled.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD3
 license-file: LICENSE
