@@ -19,6 +19,9 @@ import Debug.Trace.Internal (userTracingEnabled)
 --
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceEvent :: String -> a -> a
 traceEvent message a
   | userTracingEnabled = Base.traceEvent message a
@@ -29,6 +32,9 @@ traceEvent message a
 --
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceEventIO :: String -> IO ()
 traceEventIO message = when userTracingEnabled $ Base.traceEventIO message
 
@@ -37,6 +43,9 @@ traceEventIO message = when userTracingEnabled $ Base.traceEventIO message
 --
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceMarker :: String -> a -> a
 traceMarker message a
   | userTracingEnabled = Base.traceMarker message a
@@ -47,5 +56,8 @@ traceMarker message a
 --
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceMarkerIO :: String -> IO ()
 traceMarkerIO message = when userTracingEnabled $ Base.traceMarkerIO message

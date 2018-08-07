@@ -1,6 +1,6 @@
 name: ghc-trace-events
-version: 0.0.0
-synopsis: Faster replacements for traceEvent and traceEventMarker
+version: 0.0.0.1
+synopsis: Faster replacements for traceEvent and traceMarker
 description: This library provies 3 modules:
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
@@ -9,6 +9,10 @@ description: This library provies 3 modules:
   tracing functions in "Debug.Trace".
   ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
   in "Debug.Trace".
+  .
+  Unlike the tracing functions in base, all the tracing functions in this
+  package don't evaluate the input if user event logging (the @-lu@ option) is
+  disabled.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD3
 license-file: LICENSE
@@ -24,7 +28,7 @@ cabal-version: >= 1.10
 tested-with: GHC == 7.10.3
   || == 8.0.2
   || == 8.2.2
-  || == 8.4.2
+  || == 8.4.3
 
 library
   exposed-modules:

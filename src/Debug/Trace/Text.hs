@@ -30,6 +30,9 @@ import Debug.Trace.Internal (userTracingEnabled)
 --
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceEvent :: T.Text -> a -> a
 traceEvent message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -45,6 +48,9 @@ traceEvent message a
 --
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceEventIO :: T.Text -> IO ()
 traceEventIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->
@@ -58,6 +64,9 @@ traceEventIO message = when userTracingEnabled $
 --
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceMarker :: T.Text -> a -> a
 traceMarker message a
   | userTracingEnabled = unsafeDupablePerformIO $ do
@@ -73,6 +82,9 @@ traceMarker message a
 --
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
+-- broken evnetlog.
 traceMarkerIO :: T.Text -> IO ()
 traceMarkerIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->
