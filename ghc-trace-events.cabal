@@ -1,5 +1,5 @@
 name: ghc-trace-events
-version: 0.0.0
+version: 0.0.0.1
 synopsis: Faster replacements for traceEvent and traceMarker
 description: This library provies 3 modules:
   .
