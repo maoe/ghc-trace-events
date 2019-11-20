@@ -1,3 +1,4 @@
+cabal-version: 2.2
 name: ghc-trace-events
 version: 0.0.0.1
 synopsis: Faster replacements for traceEvent and traceMarker
@@ -13,25 +14,39 @@ description: This library provies 3 modules:
   Unlike the tracing functions in base, all the tracing functions in this
   package don't evaluate the input if user event logging (the @-lu@ option) is
   disabled.
+  .
+  Additionally as of GHC 8.8, ["Debug.Trace.Binary"] is avaiable.
+  'Debug.Trace.Binary.traceBinaryEvent' can be used to log arbitrary blobs
+  (rather than UTF-8 encoded strings) into an eventlog.
 homepage: https://github.com/maoe/ghc-trace-events
-license: BSD3
+license: BSD-3-Clause
 license-file: LICENSE
 author: Mitsutoshi Aoe
-maintainer: Mitsutoshi Aoe <maoe@foldr.in>
-copyright: Copyright (C) 2018 Mitsutoshi Aoe
+maintainer: Mitsutoshi Aoe <me@maoe.name>
+copyright: Copyright (C) 2018-2019 Mitsutoshi Aoe
 category: Development, GHC, Trace
 build-type: Simple
 extra-source-files:
   CHANGELOG.md
   README.md
-cabal-version: >= 1.10
 tested-with: GHC == 7.10.3
   || == 8.0.2
   || == 8.2.2
   || == 8.4.4
-  || == 8.6.4
+  || == 8.6.5
+  || == 8.8.1
+
+common base { build-depends: base >= 4.8 && < 4.14 }
+common bytestring { build-depends: bytestring >= 0.9.2 && < 0.11 }
+common criterion { build-depends: criterion < 1.6 }
+common ghc-trace-events { build-depends: ghc-trace-events }
+common text { build-depends: text >= 1.0.0 && < 1.3 }
 
 library
+  import:
+      base
+    , bytestring
+    , text
   exposed-modules:
     Debug.Trace.ByteString
     Debug.Trace.String
@@ -40,34 +55,29 @@ library
   if impl(ghc >= 8.7)
     exposed-modules:
       Debug.Trace.Binary
-  build-depends:
-      base >= 4.8 && < 4.13
-    , bytestring >= 0.9.2 && < 0.11
-    , ghc-prim
-    , text >= 1.0.0 && < 1.3
   hs-source-dirs: src
   c-sources: cbits/tracing.c
   default-language: Haskell2010
 
 benchmark bench-trace-enabled
-  type: exitcode-stdio-1.0
-  build-depends:
+  import:
       base
     , bytestring
     , criterion
     , ghc-trace-events
+  type: exitcode-stdio-1.0
   ghc-options: -eventlog -threaded "-with-rtsopts=-l"
   main-is: bench-trace.hs
   hs-source-dirs: benchmarks
   default-language: Haskell2010
 
 benchmark bench-trace-disabled
-  type: exitcode-stdio-1.0
-  build-depends:
+  import:
       base
     , bytestring
     , criterion
     , ghc-trace-events
+  type: exitcode-stdio-1.0
   ghc-options: -threaded
   main-is: bench-trace.hs
   hs-source-dirs: benchmarks
