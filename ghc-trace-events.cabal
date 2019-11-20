@@ -1,23 +1,29 @@
 cabal-version: 2.2
 name: ghc-trace-events
 version: 0.0.0.1
-synopsis: Faster traceEvent and traceMarker, and also traceBinaryEvent
-description: This library provies the following modules:
+synopsis: Faster traceEvent and traceMarker, and binary object logging for
+  eventlog
+description: ghc-trace-events provides faster traceEvent and traceMarker as well
+  as arbitrary binary object logging for the eventlog framework. Unlike the
+  <http://hackage.haskell.org/package/base/docs/Debug-Trace.html#g:2 eventlog tracing functions in base>,
+  all the tracing functions in this library don't evaluate the input if user
+  event logging (the
+  <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/runtime_control.html#rts-flag--l%20⟨flags⟩ -lu>
+  flag) is disabled, which can give a significant boost in performance. Take a
+  look at the benchmark suite for the details.
+  .
+  This library provies the following modules:
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
   "Debug.Trace".
-  ["Debug.Trace.ByteString"] 'Data.ByteString.ByteString' variants of the event
-  tracing functions in "Debug.Trace".
+  ["Debug.Trace.ByteString"] UTF-8 encoded 'Data.ByteString.ByteString' variants
+  of the event tracing functions. It's faster than the String variants.
   ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
-  in "Debug.Trace".
-  ["Debug.Trace.Binary"] Available for GHC 8.8 or later.
-  'Debug.Trace.Binary.traceBinaryEvent' can be used to log arbitrary binary
-  objects rather than UTF-8 encoded strings into an eventlog.
-  .
-  Unlike the tracing functions in base, all the tracing functions in this
-  package don't evaluate the input if user event logging (the
-  <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/runtime_control.html#rts-flag--l%20⟨flags⟩ -lu>
-  flag) is disabled.
+  in "Debug.Trace". It's faster than the String variants.
+  ["Debug.Trace.Binary"] Arbitary binary object logging available for GHC 8.8 or
+  later. Unlike the other tracing functions 'Debug.Trace.Binary.traceBinaryEvent'
+  takes an arbitrary 'Data.ByteString.ByteString' objects as opposed to UTF-8
+  encoded strings.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD-3-Clause
 license-file: LICENSE

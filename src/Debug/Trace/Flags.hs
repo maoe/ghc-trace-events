@@ -12,8 +12,8 @@ import Data.Word
 #endif
 
 -- | Check if user tracing is enabled in event logging. Currently GHC RTS
--- doesn't modify after the eventlog framework is initialized so making this
--- a constant value makes sense.
+-- doesn't modify the flag after the eventlog framework is initialized so making
+-- this a constant value makes sense.
 userTracingEnabled :: Bool
 userTracingEnabled = toBool c_userTracingEnabled
 {-# NOINLINE userTracingEnabled #-}
