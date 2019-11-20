@@ -26,7 +26,7 @@ import qualified System.IO.Unsafe as Unsafe
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 
-import Debug.Trace.Internal (userTracingEnabled)
+import Debug.Trace.Flags (userTracingEnabled)
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEvent'.
 --

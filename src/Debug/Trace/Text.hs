@@ -21,7 +21,7 @@ import qualified Data.ByteString as B
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 
-import Debug.Trace.Internal (userTracingEnabled)
+import Debug.Trace.Flags (userTracingEnabled)
 
 -- | 'T.Text' variant of 'Debug.Trace.traceEvent'.
 --

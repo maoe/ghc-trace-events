@@ -12,7 +12,7 @@ module Debug.Trace.String
 import Control.Monad
 import qualified Debug.Trace as Base
 
-import Debug.Trace.Internal (userTracingEnabled)
+import Debug.Trace.Flags (userTracingEnabled)
 
 -- | Drop-in replacement for 'Debug.Trace.traceEvent' but is more efficient
 -- if user tracing in eventlog is disabled.

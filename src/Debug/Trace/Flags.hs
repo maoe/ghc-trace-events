@@ -1,8 +1,8 @@
 {-# LANGUAGE CPP #-}
 {-|
-Internal module that includes utility functions.
+Utility functions to inspect RTS flags
 -}
-module Debug.Trace.Internal
+module Debug.Trace.Flags
   ( userTracingEnabled
   ) where
 import Foreign.C.Types
@@ -11,7 +11,9 @@ import Foreign.Marshal.Utils
 import Data.Word
 #endif
 
--- | Check if user tracing is enabled in event logging.
+-- | Check if user tracing is enabled in event logging. Currently GHC RTS
+-- doesn't modify after the eventlog framework is initialized so making this
+-- a constant value makes sense.
 userTracingEnabled :: Bool
 userTracingEnabled = toBool c_userTracingEnabled
 {-# NOINLINE userTracingEnabled #-}

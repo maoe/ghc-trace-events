@@ -49,9 +49,9 @@ library
     , text
   exposed-modules:
     Debug.Trace.ByteString
+    Debug.Trace.Flags
     Debug.Trace.String
     Debug.Trace.Text
-    Debug.Trace.Internal
   if impl(ghc >= 8.7)
     exposed-modules:
       Debug.Trace.Binary

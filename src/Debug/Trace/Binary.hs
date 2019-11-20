@@ -12,7 +12,7 @@ import qualified System.IO.Unsafe as Unsafe
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 
-import Debug.Trace.Internal (userTracingEnabled)
+import Debug.Trace.Flags (userTracingEnabled)
 
 -- | The 'traceBinaryEvent' function behaves like
 -- 'Debug.Trace.ByteString.traceEvent' but with the difference that the message
