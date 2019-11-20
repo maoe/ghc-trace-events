@@ -36,8 +36,8 @@ import Debug.Trace.Internal (userTracingEnabled)
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEvent :: B.ByteString -> a -> a
 traceEvent message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -54,8 +54,8 @@ traceEvent message a
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEventIO :: B.ByteString -> IO ()
 traceEventIO message = when userTracingEnabled $
   B.useAsCString message $ \(Ptr p) -> IO $ \s ->
@@ -70,8 +70,8 @@ traceEventIO message = when userTracingEnabled $
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarker :: B.ByteString -> a -> a
 traceMarker message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -88,8 +88,8 @@ traceMarker message a
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarkerIO :: B.ByteString -> IO ()
 traceMarkerIO message = when userTracingEnabled $
   B.useAsCString message $ \(Ptr p) -> IO $ \s ->
@@ -105,8 +105,8 @@ traceMarkerIO message = when userTracingEnabled $
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 unsafeTraceEvent :: B.ByteString -> a -> a
 unsafeTraceEvent message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -124,8 +124,8 @@ unsafeTraceEvent message a
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 unsafeTraceEventIO :: B.ByteString -> IO ()
 unsafeTraceEventIO message = when userTracingEnabled $
   BU.unsafeUseAsCString message $ \(Ptr p) -> IO $ \s ->
@@ -141,8 +141,8 @@ unsafeTraceEventIO message = when userTracingEnabled $
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 unsafeTraceMarker :: B.ByteString -> a -> a
 unsafeTraceMarker message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -160,8 +160,8 @@ unsafeTraceMarker message a
 -- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 unsafeTraceMarkerIO :: B.ByteString -> IO ()
 unsafeTraceMarkerIO message = when userTracingEnabled $
   BU.unsafeUseAsCString message $ \(Ptr p) -> IO $ \s ->
