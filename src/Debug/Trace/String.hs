@@ -12,7 +12,7 @@ module Debug.Trace.String
 import Control.Monad
 import qualified Debug.Trace as Base
 
-import Debug.Trace.Internal (userTracingEnabled)
+import Debug.Trace.Flags (userTracingEnabled)
 
 -- | Drop-in replacement for 'Debug.Trace.traceEvent' but is more efficient
 -- if user tracing in eventlog is disabled.
@@ -20,8 +20,8 @@ import Debug.Trace.Internal (userTracingEnabled)
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEvent :: String -> a -> a
 traceEvent message a
   | userTracingEnabled = Base.traceEvent message a
@@ -33,8 +33,8 @@ traceEvent message a
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEventIO :: String -> IO ()
 traceEventIO message = when userTracingEnabled $ Base.traceEventIO message
 
@@ -44,8 +44,8 @@ traceEventIO message = when userTracingEnabled $ Base.traceEventIO message
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarker :: String -> a -> a
 traceMarker message a
   | userTracingEnabled = Base.traceMarker message a
@@ -57,7 +57,7 @@ traceMarker message a
 -- Note that this function doesn't evaluate the 'String' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarkerIO :: String -> IO ()
 traceMarkerIO message = when userTracingEnabled $ Base.traceMarkerIO message

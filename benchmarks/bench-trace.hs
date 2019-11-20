@@ -1,16 +1,20 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 import Criterion.Main
 
 import qualified Debug.Trace as Base
 import qualified Debug.Trace.ByteString as B
+import qualified Debug.Trace.Flags as F
 import qualified Debug.Trace.String as S
 import qualified Debug.Trace.Text as T
 
-import qualified Debug.Trace.Internal as I
+#if MIN_VERSION_base(4, 13, 0)
+import qualified Debug.Trace.Binary as Bin
+#endif
 
 main :: IO ()
 main = do
-  putStrLn $ "userTracingEnabled: " ++ show I.userTracingEnabled
+  putStrLn $ "userTracingEnabled: " ++ show F.userTracingEnabled
   defaultMain
     [ bgroup "traceEvent"
       [ bench "Base" $ whnf (Base.traceEvent "Hello") ()
@@ -40,4 +44,8 @@ main = do
       , bench "ByteString/Unsafe" $ nfIO $ B.unsafeTraceMarkerIO "Hello"
       , bench "Text" $ nfIO $ T.traceMarkerIO "Hello"
       ]
+#if MIN_VERSION_base(4, 13, 0)
+    , bench "traceBinaryEvent" $ whnf (Bin.traceBinaryEvent "Hello") ()
+    , bench "traceBinaryEventIO" $ nfIO $ Bin.traceBinaryEventIO "Hello"
+#endif
     ]
