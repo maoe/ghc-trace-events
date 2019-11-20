@@ -4,12 +4,11 @@ module Debug.Trace.Binary
   ( traceBinaryEvent
   , traceBinaryEventIO
   ) where
-import GHC.Base
-import GHC.IO
-import GHC.Ptr
+import Control.Monad (when)
+import GHC.Exts (Ptr(..), Int(..), traceBinaryEvent#)
+import GHC.IO (IO(..))
 import qualified System.IO.Unsafe as Unsafe
 
-import GHC.Prim
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 

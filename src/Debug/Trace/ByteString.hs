@@ -17,13 +17,12 @@ module Debug.Trace.ByteString
   , unsafeTraceMarker
   , unsafeTraceMarkerIO
   ) where
-import GHC.Base
-import GHC.IO
-import GHC.Ptr
+import Control.Monad (when)
+import GHC.Exts (Ptr(..), traceEvent#, traceMarker#)
+import GHC.IO (IO(..))
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
-import GHC.Prim
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 
@@ -75,7 +74,7 @@ traceEventIO message = when userTracingEnabled $
 -- broken evnetlog.
 traceMarker :: B.ByteString -> a -> a
 traceMarker message a
-  | userTracingEnabled = unsafeDupablePerformIO $ do
+  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
     traceMarkerIO message
     return a
   | otherwise = a

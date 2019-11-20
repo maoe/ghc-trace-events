@@ -10,10 +10,10 @@ module Debug.Trace.Text
   , traceMarker
   , traceMarkerIO
   ) where
+import Control.Monad (when)
 import Foreign.C.String (CString)
-import GHC.Base
-import GHC.IO
-import GHC.Ptr
+import GHC.Exts (Ptr(..), traceEvent#, traceMarker#)
+import GHC.IO (IO(..))
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
@@ -69,7 +69,7 @@ traceEventIO message = when userTracingEnabled $
 -- broken evnetlog.
 traceMarker :: T.Text -> a -> a
 traceMarker message a
-  | userTracingEnabled = unsafeDupablePerformIO $ do
+  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
     traceMarkerIO message
     return a
   | otherwise = a
