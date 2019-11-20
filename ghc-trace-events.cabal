@@ -1,8 +1,8 @@
 cabal-version: 2.2
 name: ghc-trace-events
 version: 0.0.0.1
-synopsis: Faster replacements for traceEvent and traceMarker
-description: This library provies 3 modules:
+synopsis: Faster traceEvent and traceMarker, and also traceBinaryEvent
+description: This library provies the following modules:
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
   "Debug.Trace".
@@ -10,14 +10,14 @@ description: This library provies 3 modules:
   tracing functions in "Debug.Trace".
   ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
   in "Debug.Trace".
+  ["Debug.Trace.Binary"] Available for GHC 8.8 or later.
+  'Debug.Trace.Binary.traceBinaryEvent' can be used to log arbitrary binary
+  objects rather than UTF-8 encoded strings into an eventlog.
   .
   Unlike the tracing functions in base, all the tracing functions in this
-  package don't evaluate the input if user event logging (the @-lu@ option) is
-  disabled.
-  .
-  Additionally as of GHC 8.8, ["Debug.Trace.Binary"] is avaiable.
-  'Debug.Trace.Binary.traceBinaryEvent' can be used to log arbitrary blobs
-  (rather than UTF-8 encoded strings) into an eventlog.
+  package don't evaluate the input if user event logging (the
+  <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/runtime_control.html#rts-flag--l%20⟨flags⟩ -lu>
+  flag) is disabled.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD-3-Clause
 license-file: LICENSE

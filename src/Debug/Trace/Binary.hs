@@ -14,9 +14,9 @@ import qualified Data.ByteString.Unsafe as BU
 
 import Debug.Trace.Internal (userTracingEnabled)
 
--- | The 'traceBinaryEvent' function behaves like 'traceEvent' but with the
--- difference that the message is a binary object rather than a UTF-8 encoded
--- string.
+-- | The 'traceBinaryEvent' function behaves like
+-- 'Debug.Trace.ByteString.traceEvent' but with the difference that the message
+-- is a binary object rather than a UTF-8 encoded string.
 --
 -- It is suitable for use in pure code. In an IO context use
 -- 'traceBinaryEventIO' instead.
