@@ -10,10 +10,10 @@ module Debug.Trace.Text
   , traceMarker
   , traceMarkerIO
   ) where
+import Control.Monad (when)
 import Foreign.C.String (CString)
-import GHC.Base
-import GHC.IO
-import GHC.Ptr
+import GHC.Exts (Ptr(..), traceEvent#, traceMarker#)
+import GHC.IO (IO(..))
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
@@ -31,8 +31,8 @@ import Debug.Trace.Internal (userTracingEnabled)
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEvent :: T.Text -> a -> a
 traceEvent message a
   | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
@@ -49,8 +49,8 @@ traceEvent message a
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceEventIO :: T.Text -> IO ()
 traceEventIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->
@@ -65,11 +65,11 @@ traceEventIO message = when userTracingEnabled $
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarker :: T.Text -> a -> a
 traceMarker message a
-  | userTracingEnabled = unsafeDupablePerformIO $ do
+  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
     traceMarkerIO message
     return a
   | otherwise = a
@@ -83,8 +83,8 @@ traceMarker message a
 -- Note that this function doesn't evaluate the 'T.Text' if user tracing
 -- in eventlog is disabled.
 --
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS generates a
--- broken evnetlog.
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
 traceMarkerIO :: T.Text -> IO ()
 traceMarkerIO message = when userTracingEnabled $
   withCString message $ \(Ptr p) -> IO $ \s ->
