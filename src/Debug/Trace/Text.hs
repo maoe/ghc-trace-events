@@ -1,7 +1,7 @@
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE UnboxedTuples #-}
 {-|
-'T.Text' variants of the tracing functions in "Debug.Trace".
+'T.Text' variant of the tracing functions in "Debug.Trace".
 -}
 module Debug.Trace.Text
   ( traceEvent

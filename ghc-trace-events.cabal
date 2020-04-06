@@ -16,13 +16,14 @@ description: ghc-trace-events provides faster traceEvent and traceMarker as well
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
   "Debug.Trace".
-  ["Debug.Trace.ByteString"] UTF-8 encoded 'Data.ByteString.ByteString' variants
-  of the event tracing functions. It's faster than the String variants.
-  ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
-  in "Debug.Trace". It's faster than the String variants.
+  ["Debug.Trace.ByteString"] UTF-8 encoded 'ByteString' variant
+  of the event tracing functions in "Debug.Trace". It's faster than the 'String'
+  variant.
+  ["Debug.Trace.Text"] 'Text' variant of the event tracing functions
+  in "Debug.Trace". It's faster than the 'String' variant.
   ["Debug.Trace.Binary"] Arbitary binary object logging available for GHC 8.8 or
   later. Unlike the other tracing functions 'Debug.Trace.Binary.traceBinaryEvent'
-  takes an arbitrary 'Data.ByteString.ByteString' object as opposed to a UTF-8
+  takes an arbitrary 'ByteString' object as opposed to a UTF-8
   encoded string.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD-3-Clause

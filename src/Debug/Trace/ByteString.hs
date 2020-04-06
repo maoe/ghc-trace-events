@@ -2,7 +2,7 @@
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE UnboxedTuples #-}
 {-|
-'B.ByteString' variants of the tracing functions in "Debug.Trace".
+'B.ByteString' variant of the tracing functions in "Debug.Trace".
 -}
 module Debug.Trace.ByteString
   ( traceEvent
