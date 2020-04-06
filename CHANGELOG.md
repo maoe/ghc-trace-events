@@ -1,5 +1,10 @@
 # Revision history for ghc-trace-events
 
+## v0.1.0.1 - 2020-04-06
+
+* Support GHC 8.10.1
+* Minor documentation updates
+
 ## v0.1.0 - 2019-11-20
 
 * Add traceBinaryEvent and traceBinaryEventIO

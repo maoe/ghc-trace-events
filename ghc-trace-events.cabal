@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name: ghc-trace-events
-version: 0.1.0
+version: 0.1.0.1
 synopsis: Faster traceEvent and traceMarker, and binary object logging for
   eventlog
 description: ghc-trace-events provides faster traceEvent and traceMarker as well
@@ -16,14 +16,15 @@ description: ghc-trace-events provides faster traceEvent and traceMarker as well
   .
   ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
   "Debug.Trace".
-  ["Debug.Trace.ByteString"] UTF-8 encoded 'Data.ByteString.ByteString' variants
-  of the event tracing functions. It's faster than the String variants.
-  ["Debug.Trace.Text"] 'Data.Text.Text' variants of the event tracing functions
-  in "Debug.Trace". It's faster than the String variants.
+  ["Debug.Trace.ByteString"] UTF-8 encoded 'ByteString' variant
+  of the event tracing functions in "Debug.Trace". It's faster than the 'String'
+  variant.
+  ["Debug.Trace.Text"] 'Text' variant of the event tracing functions
+  in "Debug.Trace". It's faster than the 'String' variant.
   ["Debug.Trace.Binary"] Arbitary binary object logging available for GHC 8.8 or
   later. Unlike the other tracing functions 'Debug.Trace.Binary.traceBinaryEvent'
-  takes an arbitrary 'Data.ByteString.ByteString' objects as opposed to UTF-8
-  encoded strings.
+  takes an arbitrary 'ByteString' object as opposed to a UTF-8
+  encoded string.
 homepage: https://github.com/maoe/ghc-trace-events
 license: BSD-3-Clause
 license-file: LICENSE
@@ -40,9 +41,10 @@ tested-with: GHC == 7.10.3
   || == 8.2.2
   || == 8.4.4
   || == 8.6.5
-  || == 8.8.1
+  || == 8.8.3
+  || == 8.10.1
 
-common base { build-depends: base >= 4.8 && < 4.14 }
+common base { build-depends: base >= 4.8 && < 4.15 }
 common bytestring { build-depends: bytestring >= 0.9.2 && < 0.11 }
 common criterion { build-depends: criterion < 1.6 }
 common ghc-trace-events { build-depends: ghc-trace-events }
