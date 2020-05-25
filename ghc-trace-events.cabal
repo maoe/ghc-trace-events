@@ -64,7 +64,6 @@ library
     exposed-modules:
       Debug.Trace.Binary
   hs-source-dirs: src
-  c-sources: cbits/tracing.c
   default-language: Haskell2010
 
 benchmark bench-trace-enabled
