@@ -1,5 +1,10 @@
 # Revision history for ghc-trace-events
 
+## v0.1.1 - 2020-06-07
+
+* Remove redundant checks of userTracingEnabled
+* Optimize Debug.Trace.Text
+
 ## v0.1.0.1 - 2020-04-06
 
 * Support GHC 8.10.1
