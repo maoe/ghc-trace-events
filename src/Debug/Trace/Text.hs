@@ -34,11 +34,9 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEvent :: T.Text -> a -> a
-traceEvent message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceEventIO message
-    return a
-  | otherwise = a
+traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
+  traceEventIO message
+  return a
 {-# NOINLINE traceEvent #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceEventIO'.
@@ -68,11 +66,9 @@ traceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarker :: T.Text -> a -> a
-traceMarker message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceMarkerIO message
-    return a
-  | otherwise = a
+traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO message
+  return a
 {-# NOINLINE traceMarker #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceMarkerIO'.
