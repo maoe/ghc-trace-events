@@ -31,11 +31,9 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceBinaryEvent :: B.ByteString -> a -> a
-traceBinaryEvent bytes a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceBinaryEventIO bytes
-    return a
-  | otherwise = a
+traceBinaryEvent bytes a = Unsafe.unsafeDupablePerformIO $ do
+  traceBinaryEventIO bytes
+  return a
 {-# NOINLINE traceBinaryEvent #-}
 
 -- | The 'traceBinaryEventIO' function emits a binary message to the eventlog,

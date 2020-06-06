@@ -39,11 +39,9 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEvent :: B.ByteString -> a -> a
-traceEvent message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceEventIO message
-    return a
-  | otherwise = a
+traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
+  traceEventIO message
+  return a
 {-# NOINLINE traceEvent #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEventIO'.
@@ -73,11 +71,9 @@ traceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarker :: B.ByteString -> a -> a
-traceMarker message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceMarkerIO message
-    return a
-  | otherwise = a
+traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO message
+  return a
 {-# NOINLINE traceMarker #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.
@@ -108,11 +104,9 @@ traceMarkerIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceEvent :: B.ByteString -> a -> a
-unsafeTraceEvent message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    unsafeTraceEventIO message
-    return a
-  | otherwise = a
+unsafeTraceEvent message a = Unsafe.unsafeDupablePerformIO $ do
+  unsafeTraceEventIO message
+  return a
 {-# NOINLINE unsafeTraceEvent #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEventIO'.
@@ -144,11 +138,9 @@ unsafeTraceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceMarker :: B.ByteString -> a -> a
-unsafeTraceMarker message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    unsafeTraceEventIO message
-    return a
-  | otherwise = a
+unsafeTraceMarker message a = Unsafe.unsafeDupablePerformIO $ do
+  unsafeTraceEventIO message
+  return a
 {-# NOINLINE unsafeTraceMarker #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.

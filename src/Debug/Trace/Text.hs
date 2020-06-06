@@ -17,7 +17,7 @@ import GHC.IO (IO(..))
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
-import qualified Data.ByteString as B
+import qualified Data.ByteString.Unsafe as BU
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 
@@ -34,11 +34,9 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEvent :: T.Text -> a -> a
-traceEvent message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceEventIO message
-    return a
-  | otherwise = a
+traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
+  traceEventIO message
+  return a
 {-# NOINLINE traceEvent #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceEventIO'.
@@ -68,11 +66,9 @@ traceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarker :: T.Text -> a -> a
-traceMarker message a
-  | userTracingEnabled = Unsafe.unsafeDupablePerformIO $ do
-    traceMarkerIO message
-    return a
-  | otherwise = a
+traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO message
+  return a
 {-# NOINLINE traceMarker #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceMarkerIO'.
@@ -91,5 +87,7 @@ traceMarkerIO message = when userTracingEnabled $
     case traceMarker# p s of
       s' -> (# s', () #)
 
+-- NB. unsafeUseAsCString is safe here because we don't poke the pointer or use
+-- the ByteString later.
 withCString :: T.Text -> (CString -> IO a) -> IO a
-withCString text = B.useAsCString (TE.encodeUtf8 text)
+withCString text = BU.unsafeUseAsCString $ TE.encodeUtf8 text
