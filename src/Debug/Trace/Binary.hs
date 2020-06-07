@@ -31,10 +31,15 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceBinaryEvent :: B.ByteString -> a -> a
-traceBinaryEvent bytes a = Unsafe.unsafeDupablePerformIO $ do
-  traceBinaryEventIO bytes
+traceBinaryEvent bytes a
+  | userTracingEnabled = traceBinaryEvent' bytes a
+  | otherwise = a
+
+traceBinaryEvent' :: B.ByteString -> a -> a
+traceBinaryEvent' bytes a = Unsafe.unsafeDupablePerformIO $ do
+  traceBinaryEventIO' bytes
   return a
-{-# NOINLINE traceBinaryEvent #-}
+{-# NOINLINE traceBinaryEvent' #-}
 
 -- | The 'traceBinaryEventIO' function emits a binary message to the eventlog,
 -- if eventlog profiling is available and enabled at runtime.
@@ -48,7 +53,10 @@ traceBinaryEvent bytes a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceBinaryEventIO :: B.ByteString -> IO ()
-traceBinaryEventIO bytes = when userTracingEnabled $
+traceBinaryEventIO bytes = when userTracingEnabled $ traceBinaryEventIO' bytes
+
+traceBinaryEventIO' :: B.ByteString -> IO ()
+traceBinaryEventIO' bytes =
   BU.unsafeUseAsCStringLen bytes $ \(Ptr p, I# n) -> IO $ \s ->
     case traceBinaryEvent# p n s of
       s' -> (# s', () #)

@@ -38,10 +38,15 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEvent :: B.ByteString -> a -> a
-traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
-  traceEventIO message
+traceEvent message a
+  | userTracingEnabled = traceEvent' message a
+  | otherwise = a
+
+traceEvent' :: B.ByteString -> a -> a
+traceEvent' message a = Unsafe.unsafeDupablePerformIO $ do
+  traceEventIO' message
   return a
-{-# NOINLINE traceEvent #-}
+{-# NOINLINE traceEvent' #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEventIO'.
 --
@@ -54,10 +59,12 @@ traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEventIO :: B.ByteString -> IO ()
-traceEventIO message = when userTracingEnabled $
-  B.useAsCString message $ \(Ptr p) -> IO $ \s ->
-    case traceEvent# p s of
-      s' -> (# s', () #)
+traceEventIO message = when userTracingEnabled $ traceEventIO' message
+
+traceEventIO' :: B.ByteString -> IO ()
+traceEventIO' message = B.useAsCString message $ \(Ptr p) -> IO $ \s ->
+  case traceEvent# p s of
+    s' -> (# s', () #)
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarker'.
 --
@@ -70,10 +77,15 @@ traceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarker :: B.ByteString -> a -> a
-traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
-  traceMarkerIO message
+traceMarker message a
+  | userTracingEnabled = traceMarker' message a
+  | otherwise = a
+
+traceMarker' :: B.ByteString -> a -> a
+traceMarker' message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO' message
   return a
-{-# NOINLINE traceMarker #-}
+{-# NOINLINE traceMarker' #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.
 --
@@ -86,10 +98,12 @@ traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarkerIO :: B.ByteString -> IO ()
-traceMarkerIO message = when userTracingEnabled $
-  B.useAsCString message $ \(Ptr p) -> IO $ \s ->
-    case traceMarker# p s of
-      s' -> (# s', () #)
+traceMarkerIO message = when userTracingEnabled $ traceMarkerIO' message
+
+traceMarkerIO' :: B.ByteString -> IO ()
+traceMarkerIO' message = B.useAsCString message $ \(Ptr p) -> IO $ \s ->
+  case traceMarker# p s of
+    s' -> (# s', () #)
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEvent'.
 --
@@ -103,10 +117,15 @@ traceMarkerIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceEvent :: B.ByteString -> a -> a
-unsafeTraceEvent message a = Unsafe.unsafeDupablePerformIO $ do
-  unsafeTraceEventIO message
+unsafeTraceEvent message a
+  | userTracingEnabled = unsafeTraceEvent' message a
+  | otherwise = a
+
+unsafeTraceEvent' :: B.ByteString -> a -> a
+unsafeTraceEvent' message a = Unsafe.unsafeDupablePerformIO $ do
+  unsafeTraceEventIO' message
   return a
-{-# NOINLINE unsafeTraceEvent #-}
+{-# NOINLINE unsafeTraceEvent' #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEventIO'.
 --
@@ -120,7 +139,11 @@ unsafeTraceEvent message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceEventIO :: B.ByteString -> IO ()
-unsafeTraceEventIO message = when userTracingEnabled $
+unsafeTraceEventIO message =
+  when userTracingEnabled $ unsafeTraceEventIO' message
+
+unsafeTraceEventIO' :: B.ByteString -> IO ()
+unsafeTraceEventIO' message =
   BU.unsafeUseAsCString message $ \(Ptr p) -> IO $ \s ->
     case traceEvent# p s of
       s' -> (# s', () #)
@@ -137,10 +160,15 @@ unsafeTraceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceMarker :: B.ByteString -> a -> a
-unsafeTraceMarker message a = Unsafe.unsafeDupablePerformIO $ do
-  unsafeTraceEventIO message
+unsafeTraceMarker message a
+  | userTracingEnabled = unsafeTraceMarker' message a
+  | otherwise = a
+
+unsafeTraceMarker' :: B.ByteString -> a -> a
+unsafeTraceMarker' message a = Unsafe.unsafeDupablePerformIO $ do
+  unsafeTraceMarkerIO' message
   return a
-{-# NOINLINE unsafeTraceMarker #-}
+{-# NOINLINE unsafeTraceMarker' #-}
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.
 --
@@ -154,7 +182,11 @@ unsafeTraceMarker message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 unsafeTraceMarkerIO :: B.ByteString -> IO ()
-unsafeTraceMarkerIO message = when userTracingEnabled $
+unsafeTraceMarkerIO message =
+  when userTracingEnabled $ unsafeTraceMarkerIO' message
+
+unsafeTraceMarkerIO' :: B.ByteString -> IO ()
+unsafeTraceMarkerIO' message =
   BU.unsafeUseAsCString message $ \(Ptr p) -> IO $ \s ->
     case traceMarker# p s of
       s' -> (# s', () #)

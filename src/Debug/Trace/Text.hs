@@ -33,10 +33,15 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEvent :: T.Text -> a -> a
-traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
-  traceEventIO message
+traceEvent message a
+  | userTracingEnabled = traceEvent' message a
+  | otherwise = a
+
+traceEvent' :: T.Text -> a -> a
+traceEvent' message a = Unsafe.unsafeDupablePerformIO $ do
+  traceEventIO' message
   return a
-{-# NOINLINE traceEvent #-}
+{-# NOINLINE traceEvent' #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceEventIO'.
 --
@@ -49,10 +54,12 @@ traceEvent message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceEventIO :: T.Text -> IO ()
-traceEventIO message = when userTracingEnabled $
-  withCString message $ \(Ptr p) -> IO $ \s ->
-    case traceEvent# p s of
-      s' -> (# s', () #)
+traceEventIO message = when userTracingEnabled $ traceEventIO' message
+
+traceEventIO' :: T.Text -> IO ()
+traceEventIO' message = withCString message $ \(Ptr p) -> IO $ \s ->
+  case traceEvent# p s of
+    s' -> (# s', () #)
 
 -- | 'T.Text' variant of 'Debug.Trace.traceMarker'.
 --
@@ -65,10 +72,15 @@ traceEventIO message = when userTracingEnabled $
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarker :: T.Text -> a -> a
-traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
-  traceMarkerIO message
+traceMarker message a
+  | userTracingEnabled = traceMarker' message a
+  | otherwise = a
+
+traceMarker' :: T.Text -> a -> a
+traceMarker' message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO' message
   return a
-{-# NOINLINE traceMarker #-}
+{-# NOINLINE traceMarker' #-}
 
 -- | 'T.Text' variant of 'Debug.Trace.traceMarkerIO'.
 --
@@ -81,10 +93,12 @@ traceMarker message a = Unsafe.unsafeDupablePerformIO $ do
 -- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
 -- generates a broken eventlog.
 traceMarkerIO :: T.Text -> IO ()
-traceMarkerIO message = when userTracingEnabled $
-  withCString message $ \(Ptr p) -> IO $ \s ->
-    case traceMarker# p s of
-      s' -> (# s', () #)
+traceMarkerIO message = when userTracingEnabled $ traceMarkerIO' message
+
+traceMarkerIO' :: T.Text -> IO ()
+traceMarkerIO' message = withCString message $ \(Ptr p) -> IO $ \s ->
+  case traceMarker# p s of
+    s' -> (# s', () #)
 
 withCString :: T.Text -> (CString -> IO a) -> IO a
 withCString text = B.useAsCString (TE.encodeUtf8 text)
