@@ -1,5 +1,5 @@
 {-|
-Drop-in replacements for the event tracing functions in "Debug.Trace" but are
+Drop-in replacement for the event tracing functions in "Debug.Trace" but are
 faster when user tracing is disabled.
 -}
 module Debug.Trace.String
