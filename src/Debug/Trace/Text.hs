@@ -17,7 +17,7 @@ import GHC.IO (IO(..))
 import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
-import qualified Data.ByteString.Unsafe as BU
+import qualified Data.ByteString as B
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 
@@ -87,7 +87,5 @@ traceMarkerIO message = when userTracingEnabled $
     case traceMarker# p s of
       s' -> (# s', () #)
 
--- NB. unsafeUseAsCString is safe here because we don't poke the pointer or use
--- the ByteString later.
 withCString :: T.Text -> (CString -> IO a) -> IO a
-withCString text = BU.unsafeUseAsCString $ TE.encodeUtf8 text
+withCString text = B.useAsCString (TE.encodeUtf8 text)
