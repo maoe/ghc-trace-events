@@ -55,6 +55,7 @@ library
       base
     , bytestring
     , text
+  ghc-options: -Wall
   exposed-modules:
     Debug.Trace.ByteString
     Debug.Trace.Flags

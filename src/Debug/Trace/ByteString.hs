@@ -20,7 +20,6 @@ module Debug.Trace.ByteString
 import Control.Monad (when)
 import GHC.Exts (Ptr(..), traceEvent#, traceMarker#)
 import GHC.IO (IO(..))
-import qualified GHC.RTS.Flags as Flags
 import qualified System.IO.Unsafe as Unsafe
 
 import qualified Data.ByteString as B
