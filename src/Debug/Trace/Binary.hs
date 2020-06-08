@@ -1,7 +1,13 @@
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE UnboxedTuples #-}
+{-|
+Arbitary binary object logging available for GHC 8.8 or later. Unlike the other
+tracing functions 'traceBinaryEvent' takes an arbitrary 'B.ByteString' object as
+opposed to a UTF-8 encoded string.
+-}
 module Debug.Trace.Binary
-  ( traceBinaryEvent
+  ( -- * Binary eventlog tracing
+     traceBinaryEvent
   , traceBinaryEventIO
   ) where
 import Control.Monad (when)

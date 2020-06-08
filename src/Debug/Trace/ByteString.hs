@@ -5,14 +5,18 @@
 'B.ByteString' variant of the tracing functions in "Debug.Trace".
 -}
 module Debug.Trace.ByteString
-  ( traceEvent
+  ( -- * Eventlog tracing
+    -- $eventlog_tracing
+    traceEvent
   , traceEventIO
-
-  , traceMarker
-  , traceMarkerIO
 
   , unsafeTraceEvent
   , unsafeTraceEventIO
+
+  -- * Execution phase markers
+  -- $markers
+  , traceMarker
+  , traceMarkerIO
 
   , unsafeTraceMarker
   , unsafeTraceMarkerIO
@@ -26,6 +30,17 @@ import qualified Data.ByteString as B
 import qualified Data.ByteString.Unsafe as BU
 
 import Debug.Trace.Flags (userTracingEnabled)
+
+-- $eventlog_tracing
+--
+-- Eventlog tracing is a performance profiling system. These functions emit
+-- extra events into the eventlog. In combination with eventlog profiling
+-- tools these functions can be used for monitoring execution and
+-- investigating performance problems.
+--
+-- Currently only GHC provides eventlog profiling, see the GHC user guide for
+-- details on how to use it. These function exists for other Haskell
+-- implementations but no events are emitted.
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEvent'.
 --
@@ -64,45 +79,6 @@ traceEventIO message = when userTracingEnabled $ traceEventIO' message
 traceEventIO' :: B.ByteString -> IO ()
 traceEventIO' message = B.useAsCString message $ \(Ptr p) -> IO $ \s ->
   case traceEvent# p s of
-    s' -> (# s', () #)
-
--- | 'B.ByteString' variant of 'Debug.Trace.traceMarker'.
---
--- \(O(n)\) This function copies the 'B.ByteString' to convert it to a
--- null-terminated 'Foreign.C.Types.CString'.
---
--- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
--- in eventlog is disabled.
---
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
--- generates a broken eventlog.
-traceMarker :: B.ByteString -> a -> a
-traceMarker message a
-  | userTracingEnabled = traceMarker' message a
-  | otherwise = a
-
-traceMarker' :: B.ByteString -> a -> a
-traceMarker' message a = Unsafe.unsafeDupablePerformIO $ do
-  traceMarkerIO' message
-  return a
-{-# NOINLINE traceMarker' #-}
-
--- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.
---
--- \(O(n)\) This function copies the 'B.ByteString' to convert it to a
--- null-terminated 'Foreign.C.Types.CString'.
---
--- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
--- in eventlog is disabled.
---
--- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
--- generates a broken eventlog.
-traceMarkerIO :: B.ByteString -> IO ()
-traceMarkerIO message = when userTracingEnabled $ traceMarkerIO' message
-
-traceMarkerIO' :: B.ByteString -> IO ()
-traceMarkerIO' message = B.useAsCString message $ \(Ptr p) -> IO $ \s ->
-  case traceMarker# p s of
     s' -> (# s', () #)
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceEvent'.
@@ -147,6 +123,63 @@ unsafeTraceEventIO' message =
   BU.unsafeUseAsCString message $ \(Ptr p) -> IO $ \s ->
     case traceEvent# p s of
       s' -> (# s', () #)
+
+-- $markers
+--
+-- When looking at a profile for the execution of a program we often want to
+-- be able to mark certain points or phases in the execution and see that
+-- visually in the profile.
+--
+-- For example, a program might have several distinct phases with different
+-- performance or resource behaviour in each phase. To properly interpret the
+-- profile graph we really want to see when each phase starts and ends.
+--
+-- Markers let us do this: we can annotate the program to emit a marker at
+-- an appropriate point during execution and then see that in a profile.
+--
+-- Currently this feature is only supported in GHC by the eventlog tracing
+-- system, but in future it may also be supported by the heap profiling or
+-- other profiling tools. These function exists for other Haskell
+-- implementations but they have no effect.
+
+-- | 'B.ByteString' variant of 'Debug.Trace.traceMarker'.
+--
+-- \(O(n)\) This function copies the 'B.ByteString' to convert it to a
+-- null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
+-- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
+traceMarker :: B.ByteString -> a -> a
+traceMarker message a
+  | userTracingEnabled = traceMarker' message a
+  | otherwise = a
+
+traceMarker' :: B.ByteString -> a -> a
+traceMarker' message a = Unsafe.unsafeDupablePerformIO $ do
+  traceMarkerIO' message
+  return a
+{-# NOINLINE traceMarker' #-}
+
+-- | 'B.ByteString' variant of 'Debug.Trace.traceMarkerIO'.
+--
+-- \(O(n)\) This function copies the 'B.ByteString' to convert it to a
+-- null-terminated 'Foreign.C.Types.CString'.
+--
+-- Note that this function doesn't evaluate the 'B.ByteString' if user tracing
+-- in eventlog is disabled.
+--
+-- The input should be shorter than \(2^{16}\) bytes. Otherwise the RTS
+-- generates a broken eventlog.
+traceMarkerIO :: B.ByteString -> IO ()
+traceMarkerIO message = when userTracingEnabled $ traceMarkerIO' message
+
+traceMarkerIO' :: B.ByteString -> IO ()
+traceMarkerIO' message = B.useAsCString message $ \(Ptr p) -> IO $ \s ->
+  case traceMarker# p s of
+    s' -> (# s', () #)
 
 -- | 'B.ByteString' variant of 'Debug.Trace.traceMarker'.
 --
