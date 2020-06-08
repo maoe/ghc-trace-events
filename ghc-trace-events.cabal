@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name: ghc-trace-events
-version: 0.1.0.1
+version: 0.1.2
 synopsis: Faster traceEvent and traceMarker, and binary object logging for
   eventlog
 description: ghc-trace-events provides faster traceEvent and traceMarker as well
@@ -30,7 +30,7 @@ license: BSD-3-Clause
 license-file: LICENSE
 author: Mitsutoshi Aoe
 maintainer: Mitsutoshi Aoe <me@maoe.name>
-copyright: Copyright (C) 2018-2019 Mitsutoshi Aoe
+copyright: Copyright (C) 2018-2020 Mitsutoshi Aoe
 category: Development, GHC, Trace
 build-type: Simple
 extra-source-files:
@@ -55,6 +55,7 @@ library
       base
     , bytestring
     , text
+  ghc-options: -Wall
   exposed-modules:
     Debug.Trace.ByteString
     Debug.Trace.Flags
