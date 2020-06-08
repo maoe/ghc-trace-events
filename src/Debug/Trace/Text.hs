@@ -32,10 +32,6 @@ import Debug.Trace.Flags (userTracingEnabled)
 -- extra events into the eventlog. In combination with eventlog profiling
 -- tools these functions can be used for monitoring execution and
 -- investigating performance problems.
---
--- Currently only GHC provides eventlog profiling, see the GHC user guide for
--- details on how to use it. These function exists for other Haskell
--- implementations but no events are emitted.
 
 -- | 'T.Text' variant of 'Debug.Trace.traceEvent'.
 --
@@ -88,11 +84,6 @@ traceEventIO' message = withCString message $ \(Ptr p) -> IO $ \s ->
 --
 -- Markers let us do this: we can annotate the program to emit a marker at
 -- an appropriate point during execution and then see that in a profile.
---
--- Currently this feature is only supported in GHC by the eventlog tracing
--- system, but in future it may also be supported by the heap profiling or
--- other profiling tools. These function exists for other Haskell
--- implementations but they have no effect.
 
 -- | 'T.Text' variant of 'Debug.Trace.traceMarker'.
 --
