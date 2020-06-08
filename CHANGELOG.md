@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.1 - 2020-06-09
+
+* Delete some haddock comments that are not applicable to this library
+
 ## v0.1.2 - 2020-06-09
 
 * Revert "Use unsafeUseAsCString in place of useAsCString in Debug.Trace.Text" because it's unsafe
