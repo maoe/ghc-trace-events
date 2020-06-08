@@ -1,6 +1,11 @@
 # Revision history for ghc-trace-events
 
-## v0.1.1 - 2020-06-07
+## v0.1.2 - 2020-06-09
+
+* Revert "Use unsafeUseAsCString in place of useAsCString in Debug.Trace.Text" because it's unsafe
+* Minimize the scope of NOINLINE to get better performance when user tracing is disabled
+
+## v0.1.1 - 2020-06-07 (abondoned)
 
 * Remove redundant checks of userTracingEnabled
 * Optimize Debug.Trace.Text
