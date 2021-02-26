@@ -1,6 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
-import Criterion.Main
+import Test.Tasty.Bench
 
 import qualified Debug.Trace as Base
 import qualified Debug.Trace.ByteString as B
