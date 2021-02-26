@@ -1,5 +1,12 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.2 - 2021-02-26
+
+* Support GHC 9.0.1 ([#5](https://github.com/maoe/ghc-trace-events/pull/5))
+* Switch from Travis CI to GitHub Actions
+* Switch from criterion to tasty-bench
+
+
 ## v0.1.2.1 - 2020-06-09
 
 * Delete some haddock comments that are not applicable to this library
