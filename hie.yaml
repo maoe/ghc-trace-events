@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "./src"
+      component: "lib:ghc-trace-events"
+
+    - path: "./benchmarks/bench-trace.hs"
+      component: "ghc-trace-events:bench:bench-trace-enabled"
