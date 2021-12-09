@@ -1,8 +1,13 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.4 - 2021-12-09
+
+* Relax upper version bound for base to support GHC 9.2.1
+
 ## v0.1.2.3 - 2021-06-28
 
 * Relax upper version bound for tasty-bench ([#6](https://github.com/maoe/ghc-trace-events/pull/6))
+
 ## v0.1.2.2 - 2021-02-26
 
 * Support GHC 9.0.1 ([#5](https://github.com/maoe/ghc-trace-events/pull/5))
