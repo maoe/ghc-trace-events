@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.5 - 2022-03-06
+
+* Allow text-2.0 ([#9](https://github.com/maoe/ghc-trace-events/pull/9))
+
 ## v0.1.2.4 - 2021-12-09
 
 * Relax upper version bound for base to support GHC 9.2.1
