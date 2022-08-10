@@ -14,7 +14,7 @@ description: ghc-trace-events provides faster traceEvent and traceMarker as well
   .
   This library provies the following modules:
   .
-  ["Debug.Trace.String"] Drop-in replacements for the event tracing functions in
+  ["Debug.Trace.String"] Drop-in replacement for the event tracing functions in
   "Debug.Trace".
   ["Debug.Trace.ByteString"] UTF-8 encoded 'ByteString' variant
   of the event tracing functions in "Debug.Trace". It's faster than the 'String'
