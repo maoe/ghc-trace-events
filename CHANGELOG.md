@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.6 - 2022-08-11
+
+* Bump base upper bound to < 4.18 ([#10](https://github.com/maoe/ghc-trace-events/pull/10))
+
 ## v0.1.2.5 - 2022-03-06
 
 * Allow text-2.0 ([#9](https://github.com/maoe/ghc-trace-events/pull/9))
