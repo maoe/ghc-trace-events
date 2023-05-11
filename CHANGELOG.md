@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.7 - 2023-05-11
+
+* Allow GHC 9.6.1 ([#11](https://github.com/maoe/ghc-trace-events/pull/11))
+
 ## v0.1.2.6 - 2022-08-11
 
 * Bump base upper bound to < 4.18 ([#10](https://github.com/maoe/ghc-trace-events/pull/10))
