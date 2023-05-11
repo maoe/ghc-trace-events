@@ -30,7 +30,7 @@ license: BSD-3-Clause
 license-file: LICENSE
 author: Mitsutoshi Aoe
 maintainer: Mitsutoshi Aoe <me@maoe.name>
-copyright: Copyright (C) 2018-2022 Mitsutoshi Aoe
+copyright: Copyright (C) 2018-2023 Mitsutoshi Aoe
 category: Development, GHC, Trace
 build-type: Simple
 extra-source-files:
