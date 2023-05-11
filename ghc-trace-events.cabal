@@ -34,8 +34,9 @@ copyright: Copyright (C) 2018-2022 Mitsutoshi Aoe
 category: Development, GHC, Trace
 build-type: Simple
 extra-source-files:
-  CHANGELOG.md
   README.md
+extra-doc-files:
+  CHANGELOG.md
 tested-with: GHC == 7.10.3
   || == 8.0.2
   || == 8.2.2
