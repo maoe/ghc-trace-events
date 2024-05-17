@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name: ghc-trace-events
-version: 0.1.2.8
+version: 0.1.2.9
 synopsis: Faster traceEvent and traceMarker, and binary object logging for
   eventlog
 description: ghc-trace-events provides faster traceEvent and traceMarker as well

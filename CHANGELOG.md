@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.9 - 2024-05-18
+
+* Bump base bounds to support ghc 9.10 ([#15](https://github.com/maoe/ghc-trace-events/pull/15))
+
 ## v0.1.2.8 - 2024-01-18
 
 * Bump base, bytestring and text version bounds, include recent GHCs in CI config ([#13](https://github.com/maoe/ghc-trace-events/pull/13))
