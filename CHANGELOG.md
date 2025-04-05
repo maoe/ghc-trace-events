@@ -1,5 +1,9 @@
 # Revision history for ghc-trace-events
 
+## v0.1.2.10 - 2025-04-05
+
+* Allow base version from GHC 9.12 ([#16](https://github.com/maoe/ghc-trace-events/pull/16))
+
 ## v0.1.2.9 - 2024-05-18
 
 * Bump base bounds to support ghc 9.10 ([#15](https://github.com/maoe/ghc-trace-events/pull/15))
